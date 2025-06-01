@@ -41,6 +41,7 @@ type Mutation {
 
 type Query {
 	searchWithId(std_id: String): student
+	aggregate_search_results(std_name: String): [prog_res]
 	progressive_search_with_name(std_name: String): [student]
 }
 
