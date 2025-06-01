@@ -1,0 +1,80 @@
+# User roles: Student, Teacher, Admin
+enum Role {
+  STUDENT
+  TEACHER
+  ADMIN
+}
+
+# Basic User type
+type User {
+  id: ID!
+  name: String!
+  email: String!
+  role: Role!
+}
+
+# Course with lessons and enrolled students
+type Course {
+  id: ID!
+  title: String!
+  description: String
+  teacher: User!
+  students: [User!]!
+  lessons: [Lesson!]!
+}
+
+# Lesson content
+type Lesson {
+  id: ID!
+  title: String!
+  content: String!
+  videoUrl: String
+}
+
+# Assignment tied to a course
+type Assignment {
+  id: ID!
+  title: String!
+  description: String
+  dueDate: String!
+  course: Course!
+}
+
+# Submission by a student
+type Submission {
+  id: ID!
+  assignment: Assignment!
+  student: User!
+  content: String!
+  submittedAt: String!
+  grade: Float
+}
+
+# Queries to fetch data
+type Query {
+  me: User!
+
+  coursesByTeacher(teacherId: ID!): [Course!]!
+  coursesByStudent(studentId: ID!): [Course!]!
+  
+  courseDetails(courseId: ID!): Course
+  assignments(courseId: ID!): [Assignment!]!
+  submissions(assignmentId: ID!): [Submission!]!
+}
+
+# Mutations to create or update data
+type Mutation {
+  createCourse(title: String!, description: String, teacherId: ID!): Course!
+  enrollStudent(courseId: ID!, studentId: ID!): Course!
+
+  createAssignment(courseId: ID!, title: String!, description: String, dueDate: String!): Assignment!
+  submitAssignment(assignmentId: ID!, studentId: ID!, content: String!): Submission!
+
+  gradeSubmission(submissionId: ID!, grade: Float!): Submission!
+}
+
+# Optional subscriptions for real-time updates
+type Subscription {
+  onNewSubmission(courseId: ID!): Submission!
+  onGradeUpdated(studentId: ID!): Submission!
+}
