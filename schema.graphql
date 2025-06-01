@@ -1,0 +1,58 @@
+type prog_res {
+	student_id: String
+	student_name: String
+	age: Int
+	course: String
+	availability: String
+	university: String
+}
+
+input progressive_student_results {
+	student_id: String
+	student_name: String
+	age: Int
+	course: String
+	availability: String
+	university: String
+}
+
+type student {
+	student_id: String
+	student_name: String
+	age: Int
+}
+
+type student_creation_result {
+	student_id: String
+	student_name: String
+	age: Int
+}
+
+input student_input {
+	student_id: String
+	student_name: String
+	age: Int
+}
+
+type Mutation {
+	add_student(student_data: student_input): student_creation_result
+	progressive_details(request: [progressive_student_results]): [prog_res]
+}
+
+type Query {
+	searchWithId(std_id: String): student
+	progressive_search_with_name(std_name: String): [student]
+}
+
+type Subscription {
+	student_addition: student_creation_result
+		@aws_subscribe(mutations: ["add_student"])
+	on_progressive_search: [prog_res]
+		@aws_subscribe(mutations: ["progressive_details"])
+}
+
+schema {
+	query: Query
+	mutation: Mutation
+	subscription: Subscription
+}
