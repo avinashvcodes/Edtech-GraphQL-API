@@ -11,36 +11,35 @@ It supports managing users and courses with PostgreSQL and SQLAlchemy ORM.
 - PostgreSQL (or Dockerized PostgreSQL)
 - Install dependencies: requirements.txt
 
-Setup
+## Setup
 
-Create a virtual environment and activate it:
+**Create a virtual environment and activate it:**
 
 python -m venv venv
 source venv/bin/activate  # Linux/macOS
 venv\Scripts\activate     # Windows
 
-Install dependencies:
+**Install dependencies:**
 
 pip install -r requirements.txt
 Configure your database connection in .env.
 
-Create tables:
+**Create tables:**
 
 python -c "from database import Base, engine; Base.metadata.create_all(bind=engine)"
 
-Run the app:
+**Run the app:**
 
 uvicorn app.main:app --reload
 
-GraphQL Endpoint
+**GraphQL Endpoint**
 
-Access the GraphQL playground at:
-http://localhost:8000/graphql
+Access the GraphQL playground at: http://localhost:8000/graphql
 
-API Overview
-Completed Mutations
-Create User
+## API Overview
+### Completed Mutations
 
+**Create User**
 mutation CreateCourse($input: CreateCourseInput!) {
   createCourse(course: $input) {
     id
@@ -54,7 +53,7 @@ mutation CreateCourse($input: CreateCourseInput!) {
     created_at
   }
 }
-Example input:
+**Example input:**
 {
   "input": {
     "title": "GraphQL for Beginners",
@@ -63,8 +62,7 @@ Example input:
   }
 }
 
-Create Course
-
+**Create Course**
 mutation CreateCourse($input: CourseInput!) {
   createCourse(courseInput: $input) {
     id
@@ -76,7 +74,7 @@ mutation CreateCourse($input: CourseInput!) {
     }
   }
 }
-Example input:
+**Example input:**
 {
   "input": {
     "title": "GraphQL Basics",
@@ -85,23 +83,25 @@ Example input:
   }
 }
 
-Queries (Under Development)
+### Under Development
 
-Query to fetch users by role
-Query to list all courses
-Query to fetch courses by teacher
+- Query to fetch users by role
+- Query to list all courses
+- Query to fetch courses by teacher
 
-Other Mutations (Planned)
+### Planned
 
-Update User
-Update Course
-Delete User/Course
+- Update User
+- Update Course
+- Delete User/Course
+- **GraphQL Subscriptions** for real-time updates (e.g., live course notifications)  
+- **Docker** setup for easy deployment and development environment  
 
-Notes
+### Notes
 
-Users must be created before creating courses to assign the teacher properly.
-UUIDs are used as primary keys.
-SQLAlchemy is used for ORM and schema generation.
-PostgreSQL is the database backend (Docker recommended if local install unavailable).
+- Users must be created before creating courses to assign the teacher properly.
+- UUIDs are used as primary keys.
+- SQLAlchemy is used for ORM and schema generation.
+- PostgreSQL is the database backend (Docker recommended if local install unavailable).
 
 🚧 Project is under active development.
