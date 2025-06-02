@@ -22,6 +22,7 @@ type Course {
   teacher: User!
   students: [User!]!
   lessons: [Lesson!]!
+  created_at: String
 }
 
 # Lesson content

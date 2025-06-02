@@ -6,7 +6,6 @@ course_mutation = MutationType()
 @course_mutation.field("createCourse")
 def resolve_create_course(_, info, course):
     db = info.context["db"]
-    print(info.context["request"])
 
     new_course = Course(
         title=course["title"],
