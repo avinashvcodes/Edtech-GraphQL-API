@@ -10,7 +10,8 @@ type User {
   id: ID!
   name: String!
   email: String!
-  role: Role!
+  role: String!
+  created_at: String!
 }
 
 # Course with lessons and enrolled students
@@ -62,25 +63,23 @@ type Query {
   submissions(assignmentId: ID!): [Submission!]!
 }
 
-input CourseInput {
+input CreateCourseInput {
   title: String!
   description: String
   teacherId: ID!
 }
 
-type User {
-  id: ID!
+input CreateUserInput {
   name: String!
   email: String!
   role: String!
-  created_at: String!
 }
-
 
 # Mutations to create or update data
 type Mutation {
-  createCourse(course: CourseInput!): Course!
-  createUser(name: String!, email: String!, role: String!): User!
+  createCourse(course: CreateCourseInput!): Course!
+  createUser(user: CreateUserInput!): User!
+
   enrollStudent(courseId: ID!, studentId: ID!): Course!
 
   createAssignment(courseId: ID!, title: String!, description: String, dueDate: String!): Assignment!

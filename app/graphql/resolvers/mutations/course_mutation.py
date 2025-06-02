@@ -1,10 +1,9 @@
+from app.models import Course
 from ariadne import MutationType
 
-mutation_courses = MutationType()
-from app.models import Course
+course_mutation = MutationType()
 
-
-@mutation_courses.field("createCourse")
+@course_mutation.field("createCourse")
 def resolve_create_course(_, info, course):
     db = info.context["db"]
     print(info.context["request"])
