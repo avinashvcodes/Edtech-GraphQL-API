@@ -1,0 +1,1 @@
+from .courses_by_teacher import courses_by_teacher_query

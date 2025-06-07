@@ -80,6 +80,6 @@ mutation createCourse{
 - Users must be created before creating courses to assign the teacher properly.
 - UUIDs are used as primary keys.
 - SQLAlchemy is used for ORM and schema generation.
-- PostgreSQL is the database backend (Docker recommended if local install unavailable).
+- PostgreSQL is the database backend.
 
 🚧 Project is under active development.

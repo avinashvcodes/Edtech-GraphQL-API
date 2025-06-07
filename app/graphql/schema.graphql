@@ -20,8 +20,8 @@ type Course {
   title: String!
   description: String
   teacher: User!
-  students: [User!]!
-  lessons: [Lesson!]!
+  students: [User!]! # have to make this nullable
+  lessons: [Lesson!]! # have to make this nullable
   created_at: String
 }
 
