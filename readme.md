@@ -8,7 +8,7 @@ It supports managing users and courses with PostgreSQL and SQLAlchemy ORM.
 ## Prerequisites
 
 - Python 3.9+
-- PostgreSQL (or Dockerized PostgreSQL)
+- PostgreSQL
 - Install dependencies: requirements.txt
 
 ## Setup
@@ -26,7 +26,7 @@ Configure your database connection in .env.
 
 **Create tables:**
 
-python -c "from database import Base, engine; Base.metadata.create_all(bind=engine)"
+python -c "from app.models import Base;from app.database import engine; Base.metadata.create_all(bind=engine)"
 
 **Run the app:**
 
@@ -40,46 +40,24 @@ Access the GraphQL playground at: http://localhost:8000/graphql
 ### Completed Mutations
 
 **Create User**
-mutation CreateCourse($input: CreateCourseInput!) {
-  createCourse(course: $input) {
-    id
-    title
-    description
-    teacher {
-      id
-      name
-      email
-    }
-    created_at
-  }
-}
-**Example input:**
-{
-  "input": {
-    "title": "GraphQL for Beginners",
-    "description": "An introductory course on GraphQL fundamentals.",
-    "teacherId": "64b10518-d068-4481-8d08-0c6ca9af82e1"
+mutation createUser{
+  createUser(user:{
+    name: "John"
+    email: "john@example.com"
+    role: TEACHER
+  }){
+    __typename
   }
 }
 
 **Create Course**
-mutation CreateCourse($input: CourseInput!) {
-  createCourse(courseInput: $input) {
-    id
-    title
-    description
-    teacher {
-      id
-      name
-    }
-  }
-}
-**Example input:**
-{
-  "input": {
-    "title": "GraphQL Basics",
-    "description": "Introduction to GraphQL",
-    "teacherId": "uuid-of-existing-teacher"
+mutation createCourse{
+	createCourse(course:{
+    teacherId:"d366b6d8-3fe3-4222-ab97-d67c049fd79a"
+    description: "Introduction to GraphQL"
+    title: "GraphQL Basics"
+  }){
+    __typename
   }
 }
 

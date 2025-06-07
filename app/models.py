@@ -1,10 +1,11 @@
-from sqlalchemy import Column, String, TIMESTAMP, CheckConstraint, Text, ForeignKey
+from sqlalchemy import Column, String, TIMESTAMP, CheckConstraint, Text, ForeignKey, UniqueConstraint
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import relationship
+from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.sql import func
 import uuid
 
-from app.database import Base
+Base = declarative_base()
 
 class User(Base):
     __tablename__ = "users"
@@ -16,7 +17,7 @@ class User(Base):
     created_at = Column(TIMESTAMP, server_default=func.now()) # pylint: disable=not-callable
 
     __table_args__ = (
-        CheckConstraint("role IN ('teacher', 'student')", name="role_check"),
+        CheckConstraint("role IN ('TEACHER', 'STUDENT', 'ADMIN')", name="role_check"),
     )
 
     courses = relationship("Course", back_populates="teacher")
@@ -34,6 +35,10 @@ class Course(Base):
     created_at = Column(TIMESTAMP, server_default=func.now()) # pylint: disable=not-callable
 
     teacher = relationship("User", back_populates="courses")
+
+    __table_args__ = (
+        UniqueConstraint('title', 'teacher_id', name='unique_title_per_teacher'),
+    )
 
     def __repr__(self):
         return f"<Course(id={self.id}, title={self.title}, teacher_id={self.teacher_id})>"

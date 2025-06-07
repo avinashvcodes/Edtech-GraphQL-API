@@ -10,7 +10,7 @@ type User {
   id: ID!
   name: String!
   email: String!
-  role: String!
+  role: Role!
   created_at: String!
 }
 
@@ -73,7 +73,7 @@ input CreateCourseInput {
 input CreateUserInput {
   name: String!
   email: String!
-  role: String!
+  role: Role!
 }
 
 # Mutations to create or update data
