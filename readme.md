@@ -39,7 +39,22 @@ Access the GraphQL playground at: http://localhost:8000/graphql
 ## API Overview
 ### Completed Mutations
 
-<pre lang="markdown"> <code>```graphql # Create User Mutation mutation { createUser(user: { name: "John" email: "john@example.com" role: TEACHER }) { __typename } } # Create Course Mutation mutation { createCourse(course: { teacherId: "d366b6d8-3fe3-4222-ab97-d67c049fd79a" description: "Introduction to GraphQL" title: "GraphQL Basics" }) { __typename } } ```</code> </pre>
+<pre lang="markdown"> <code>
+```graphql 
+# Create User
+mutation { createUser(user: { name: "John" email: "john@example.com" role: TEACHER }) { __typename } } 
+# Create Course
+mutation createCourse{
+  createCourse(course: {
+    teacherId: "d366b6d8-3fe3-4222-ab97-d67c049fd79a"
+    description: "Introduction to GraphQL"
+    title: "GraphQL Basics"
+    })
+    {
+      __typename
+  }
+} ```
+</code> </pre>
 
 ### Under Development
 
