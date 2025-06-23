@@ -40,6 +40,7 @@ Access the GraphQL playground at: http://localhost:8000/graphql
 ### Completed Mutations
 
 <pre lang="markdown"> <code>
+```graphql
 # Create User
 mutation createUser{
     createUser(user: {
@@ -60,6 +61,7 @@ mutation createCourse{
         __typename
     }
 }
+```
 </code> </pre>
 
 ### Under Development
