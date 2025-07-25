@@ -1,9 +1,8 @@
 from fastapi import FastAPI, Depends
 from ariadne import load_schema_from_path, make_executable_schema
 from ariadne.asgi import GraphQL
-from app.graphql.resolvers.mutations import user_mutation, course_mutation
-from app.graphql.resolvers.queries import courses_by_teacher_query
-from app.graphql.resolvers.objects import course_object
+from app.graphql.resolvers import mutation, query
+from app.graphql.types import course_object
 from app.database import get_db
 from fastapi.requests import Request
 
@@ -13,9 +12,8 @@ schema = make_executable_schema(
     type_defs,
     [
         course_object,
-        user_mutation,
-        course_mutation,
-        courses_by_teacher_query
+        mutation,
+        query
     ]
 )
 
