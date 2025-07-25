@@ -22,7 +22,6 @@ venv\Scripts\activate     # Windows
 **Install dependencies:**
 
 pip install -r requirements.txt
-Configure your database connection in .env.
 
 **Create tables:**
 
