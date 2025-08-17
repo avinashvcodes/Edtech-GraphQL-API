@@ -25,7 +25,7 @@ pip install -r requirements.txt
 
 **Create tables:**
 
-python -c "from app.models import Base;from app.database import engine; Base.metadata.create_all(bind=engine)"
+python -c "from app.models.base import Base;from app.database import engine; Base.metadata.create_all(bind=engine)"
 
 **Run the app:**
 

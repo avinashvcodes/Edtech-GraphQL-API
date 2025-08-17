@@ -15,7 +15,17 @@ class Course(Base):
     teacher_id = Column(UUID(as_uuid=True), ForeignKey("users.id"), nullable=False)
     created_at = Column(TIMESTAMP, server_default=func.now()) # pylint: disable=not-callable
 
-    teacher = relationship("User", back_populates="courses")
+    teacher = relationship(
+        "User",
+        back_populates="courses"
+    )
+
+    lessons = relationship(
+        "Lesson",
+        back_populates="courses",
+        order_by="Lesson.order_index",
+        cascade="all, delete-orphan"
+    )
 
     __table_args__ = (
         UniqueConstraint('title', 'teacher_id', name='unique_title_per_teacher'),
