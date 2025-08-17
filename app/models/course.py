@@ -20,10 +20,10 @@ class Course(Base):
         back_populates="courses"
     )
 
-    lessons = relationship(
-        "Lesson",
+    sections = relationship(
+        "Section",
         back_populates="courses",
-        order_by="Lesson.order_index",
+        order_by="Section.order_index",
         cascade="all, delete-orphan"
     )
 
