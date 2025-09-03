@@ -16,7 +16,7 @@ class Section(Base):
     created_at = Column(TIMESTAMP, server_default=func.now()) # pylint: disable=not-callable
 
     course = relationship("Course", back_populates="sections")
-    lessons = relationship("Lesson", back_populates="sections", cascade="all, delete-orphan")
+    lessons = relationship("Lesson", back_populates="section", cascade="all, delete-orphan")
 
     __table_args__ = (
         UniqueConstraint("course_id", "order_index", name="unique_section_order_per_course"),

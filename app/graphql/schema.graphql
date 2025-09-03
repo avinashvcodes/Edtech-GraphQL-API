@@ -1,69 +1,71 @@
-# User roles: Student, Teacher, Admin
 enum Role {
   STUDENT
   TEACHER
   ADMIN
 }
 
-# Basic User type
 type User {
   id: ID!
   name: String!
   email: String!
   role: Role!
   created_at: String!
+  courses: [Course!]!
+  enrollments: [Enrollment!]!
 }
 
-# Course with lessons and enrolled students
 type Course {
   id: ID!
   title: String!
   description: String
   teacher: User!
-  students: [User!]! # have to make this nullable
-  lessons: [Lesson!]! # have to make this nullable
+  students: [User!]!
+  sections: [Section!]!
   created_at: String
 }
 
-# Lesson content
+type Section {
+  id: ID!
+  title: String!
+  order_index: Int!
+  lessons: [Lesson!]!
+  created_at: String
+}
+
 type Lesson {
   id: ID!
   title: String!
   content: String!
-  videoUrl: String
+  order_index: Int!
+  created_at: String
 }
 
-# Assignment tied to a course
-type Assignment {
+type Enrollment {
   id: ID!
-  title: String!
-  description: String
-  dueDate: String!
-  course: Course!
-}
-
-# Submission by a student
-type Submission {
-  id: ID!
-  assignment: Assignment!
   student: User!
-  content: String!
-  submittedAt: String!
-  grade: Float
+  course: Course!
+  enrolled_at: String!
 }
 
-# Queries to fetch data
+type Progress {
+  id: ID!
+  student: User!
+  lesson: Lesson!
+  completed: Boolean
+  completed_at: String
+}
+
+# ------------------ QUERIES ------------------
 type Query {
-  me: User!
-
   coursesByTeacher(teacherId: ID!): [Course!]!
-  coursesByStudent(studentId: ID!): [Course!]!
-  
-  courseDetails(courseId: ID!): Course
-  assignments(courseId: ID!): [Assignment!]!
-  submissions(assignmentId: ID!): [Submission!]!
+  courseById(id: ID!): Course
+  sectionsByCourse(courseId: ID!): [Section!]!
+  lessonsBySection(sectionId: ID!): [Lesson!]!
+  enrollmentsByStudent(studentId: ID!): [Enrollment!]!
+  progressByStudent(studentId: ID!): [Progress!]!
 }
 
+# ------------------ INPUTS ------------------
 input CreateCourseInput {
   title: String!
   description: String
@@ -76,21 +78,21 @@ input CreateUserInput {
   role: Role!
 }
 
-# Mutations to create or update data
+input EnrollStudentInput {
+  studentId: ID!
+  courseId: ID!
+}
+
+input MarkLessonCompleteInput {
+  studentId: ID!
+  lessonId: ID!
+  completed: Boolean!
+}
+
+# ------------------ MUTATIONS ------------------
 type Mutation {
   createCourse(course: CreateCourseInput!): Course!
   createUser(user: CreateUserInput!): User!
-
-  enrollStudent(courseId: ID!, studentId: ID!): Course!
-
-  createAssignment(courseId: ID!, title: String!, description: String, dueDate: String!): Assignment!
-  submitAssignment(assignmentId: ID!, studentId: ID!, content: String!): Submission!
-
-  gradeSubmission(submissionId: ID!, grade: Float!): Submission!
-}
-
-# Optional subscriptions for real-time updates
-type Subscription {
-  onNewSubmission(courseId: ID!): Submission!
-  onGradeUpdated(studentId: ID!): Submission!
+  enrollStudent(input: EnrollStudentInput!): Enrollment!
+  markLessonComplete(input: MarkLessonCompleteInput!): Progress!
 }

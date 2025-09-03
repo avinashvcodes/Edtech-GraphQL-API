@@ -22,7 +22,7 @@ class Course(Base):
 
     sections = relationship(
         "Section",
-        back_populates="courses",
+        back_populates="course",
         order_by="Section.order_index",
         cascade="all, delete-orphan"
     )
